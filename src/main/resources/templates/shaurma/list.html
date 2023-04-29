@@ -1,0 +1,44 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layout}">
+    <head>
+        <title th:text="#{shaurma.list.headline}" />
+    </head>
+    <body>
+        <div layout:fragment="content">
+            <div class="d-flex flex-wrap mb-4">
+                <h1 th:text="#{shaurma.list.headline}" class="flex-grow-1" />
+                <div>
+                    <a th:href="@{/shaurmas/add}" th:text="#{shaurma.list.createNew}" class="btn btn-primary ms-2" />
+                </div>
+            </div>
+            <div th:if="${shaurmas.empty}" th:text="#{shaurma.list.empty}" />
+            <div th:if="${!shaurmas.empty}" class="table-responsive">
+                <table class="table table-striped table-hover align-middle">
+                    <thead>
+                        <tr>
+                            <th th:text="#{shaurma.id.label}" scope="col" />
+                            <th th:text="#{shaurma.comments.label}" scope="col" />
+                            <th><!-- --></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="shaurma : ${shaurmas}">
+                            <td th:text="${shaurma.id}" />
+                            <td th:text="${shaurma.comments}" />
+                            <td>
+                                <div class="float-end text-nowrap">
+                                    <a th:href="@{/shaurmas/edit/{id}(id=${shaurma.id})}" th:text="#{shaurma.list.edit}" class="btn btn-sm btn-info" />
+                                    <form th:action="@{/shaurmas/delete/{id}(id=${shaurma.id})}"
+                                            th:data-confirm-message="#{delete.confirm}" method="post" class="js-submit-confirm d-inline">
+                                        <button th:text="#{shaurma.list.delete}" type="submit" class="btn btn-sm btn-danger" />
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </body>
+</html>

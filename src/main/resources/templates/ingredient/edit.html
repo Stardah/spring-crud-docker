@@ -1,0 +1,23 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layout}">
+    <head>
+        <title th:text="#{ingredient.edit.headline}" />
+    </head>
+    <body>
+        <div layout:fragment="content">
+            <div class="d-flex flex-wrap mb-4">
+                <h1 th:text="#{ingredient.edit.headline}" class="flex-grow-1" />
+                <div>
+                    <a th:href="@{/ingredients}" th:text="#{ingredient.edit.back}" class="btn btn-secondary" />
+                </div>
+            </div>
+            <div th:replace="~{fragments/forms::globalErrors('ingredient')}" />
+            <form th:action="${T(io.bootify.my_app.util.WebUtils).getRequest().requestURI}" method="post">
+                <div th:replace="~{fragments/forms::inputRow(object='ingredient', field='name')}" />
+                <div th:replace="~{fragments/forms::inputRow(object='ingredient', field='type', type='radio')}" />
+                <input type="submit" th:value="#{ingredient.edit.headline}" class="btn btn-primary mt-4" />
+            </form>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,27 @@
+version: '2'
+
+services:
+  db:
+    image: 'postgres:14.1-alpine'
+    container_name: my-app-db
+    ports:
+      - "8001:5432"
+    environment:
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=user
+      - POSTGRES_DB=my-app
+
+  app:
+    image: 'my-app'
+    build: .
+#      context: .
+#      dockerfile: Dockerfile
+    container_name: my-app-main
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/my-app
+      - SPRING_DATASOURCE_USERNAME=user
+      - SPRING_DATASOURCE_PASSWORD=user

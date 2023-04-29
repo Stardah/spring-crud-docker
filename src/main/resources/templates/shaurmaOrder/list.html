@@ -1,0 +1,44 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layout}">
+    <head>
+        <title th:text="#{shaurmaOrder.list.headline}" />
+    </head>
+    <body>
+        <div layout:fragment="content">
+            <div class="d-flex flex-wrap mb-4">
+                <h1 th:text="#{shaurmaOrder.list.headline}" class="flex-grow-1" />
+                <div>
+                    <a th:href="@{/shaurmaOrders/add}" th:text="#{shaurmaOrder.list.createNew}" class="btn btn-primary ms-2" />
+                </div>
+            </div>
+            <div th:if="${shaurmaOrders.empty}" th:text="#{shaurmaOrder.list.empty}" />
+            <div th:if="${!shaurmaOrders.empty}" class="table-responsive">
+                <table class="table table-striped table-hover align-middle">
+                    <thead>
+                        <tr>
+                            <th th:text="#{shaurmaOrder.id.label}" scope="col" />
+                            <th th:text="#{shaurmaOrder.shaurmaList.label}" scope="col" />
+                            <th><!-- --></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="shaurmaOrder : ${shaurmaOrders}">
+                            <td th:text="${shaurmaOrder.id}" />
+                            <td th:text="${shaurmaOrder.shaurmaList}" />
+                            <td>
+                                <div class="float-end text-nowrap">
+                                    <a th:href="@{/shaurmaOrders/edit/{id}(id=${shaurmaOrder.id})}" th:text="#{shaurmaOrder.list.edit}" class="btn btn-sm btn-info" />
+                                    <form th:action="@{/shaurmaOrders/delete/{id}(id=${shaurmaOrder.id})}"
+                                            th:data-confirm-message="#{delete.confirm}" method="post" class="js-submit-confirm d-inline">
+                                        <button th:text="#{shaurmaOrder.list.delete}" type="submit" class="btn btn-sm btn-danger" />
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </body>
+</html>
